@@ -97,7 +97,7 @@ async function scrapeBrands() {
         });
         
         console.log('⏳ Attendendo caricamento completo...');
-        await page.waitForTimeout(5000);
+        await new Promise(resolve => setTimeout(resolve, 5000));
         
         // Cerca e clicca "View brands" se presente
         try {
@@ -119,7 +119,7 @@ async function scrapeBrands() {
             
             if (viewButtonClicked) {
                 console.log('🔍 Cliccato "' + viewButtonClicked + '", aspetto caricamento...');
-                await page.waitForTimeout(5000);
+                await new Promise(resolve => setTimeout(resolve, 5000));
             }
         } catch (e) {
             console.log('ℹ️ Nessun bottone "View brands" trovato, procedo...');
