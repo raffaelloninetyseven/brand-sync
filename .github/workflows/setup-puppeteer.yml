@@ -1,0 +1,50 @@
+name: Setup Puppeteer (Run Once)
+
+on:
+  workflow_dispatch:  # Solo esecuzione manuale
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install Puppeteer
+      run: |
+        echo "📦 Installando Puppeteer..."
+        npm install puppeteer@22.15.0 --save
+        echo "✅ Puppeteer installato"
+        ls -la node_modules/puppeteer/
+        
+    - name: Create optimized package.json
+      run: |
+        cat > package.json << 'EOF'
+        {
+          "name": "brand-sync-essilorluxottica",
+          "version": "1.0.0", 
+          "description": "Automatic brand synchronization from EssilorLuxottica",
+          "main": "scrape-brands.js",
+          "dependencies": {
+            "puppeteer": "22.15.0"
+          },
+          "engines": {
+            "node": ">=18"
+          }
+        }
+        EOF
+        echo "✅ package.json ottimizzato creato"
+        
+    - name: Commit node_modules
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Setup Bot"
+        git add .
+        git commit -m "🚀 Pre-install Puppeteer for ultra-fast execution"
+        git push
