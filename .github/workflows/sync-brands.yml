@@ -1,4 +1,4 @@
-name: Sync EssilorLuxottica Brands
+name: Sync EssilorLuxottica Brands (Ultra-Fast)
 
 on:
   schedule:
@@ -20,10 +20,14 @@ jobs:
       with:
         node-version: '18'
         
-    - name: Install dependencies
-      run: npm install --production
-      
-    - name: Run brand scraping
+    # NIENTE npm install! Puppeteer è già nel repository
+    - name: Verify Puppeteer (pre-installed)
+      run: |
+        echo "🔍 Verificando Puppeteer pre-installato..."
+        ls -la node_modules/puppeteer/ || echo "❌ Puppeteer non trovato"
+        node -e "console.log('✅ Puppeteer version:', require('./node_modules/puppeteer/package.json').version)"
+        
+    - name: Run brand scraping (LIGHTNING FAST!)
       run: node scrape-brands.js
       
     - name: Commit and push changes
@@ -32,7 +36,7 @@ jobs:
         git config --local user.name "GitHub Action Bot"
         git add brands.json brands.html
         if git diff --staged --quiet; then
-          echo "No changes to commit"
+          echo "✅ No changes to commit"
         else
           git commit -m "🔄 Update brands data $(date '+%Y-%m-%d %H:%M')"
           git push
