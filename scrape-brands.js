@@ -1,11 +1,73 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const { execSync } = require('child_process');
+const path = require('path');
+
+async function ensureChrome() {
+    console.log('🔍 Verificando installazione Chrome...');
+    
+    try {
+        // Prova a trovare Chrome nella directory del progetto
+        const localChromePath = path.join(__dirname, '.chrome');
+        
+        if (fs.existsSync(localChromePath)) {
+            console.log('✅ Chrome locale trovato');
+            return;
+        }
+        
+        // Prova a scaricare Chrome localmente
+        console.log('📥 Scaricando Chrome localmente...');
+        process.env.PUPPETEER_CACHE_DIR = path.join(__dirname, '.chrome');
+        
+        execSync('npx puppeteer browsers install chrome', { 
+            stdio: 'inherit',
+            env: { ...process.env, PUPPETEER_CACHE_DIR: localChromePath }
+        });
+        
+        console.log('✅ Chrome scaricato nella directory locale');
+        
+    } catch (error) {
+        console.log('⚠️ Errore download Chrome locale, uso Chrome di sistema');
+    }
+}
 
 async function scrapeBrands() {
     console.log('🚀 Avvio copia esatta della tabella brand EssilorLuxottica...');
     
+    // Assicurati che Chrome sia disponibile
+    await ensureChrome();
+    
     const browser = await puppeteer.launch({
         headless: true,
+        // Prova Chrome locale, poi sistema, poi lascia decidere a Puppeteer
+        executablePath: (() => {
+            const localChrome = path.join(__dirname, '.chrome', 'chrome', 'linux-*', 'chrome-linux64', 'chrome');
+            const systemChrome = '/usr/bin/google-chrome-stable';
+            
+            // Cerca Chrome locale con glob pattern
+            try {
+                const chromeDirs = fs.readdirSync(path.join(__dirname, '.chrome', 'chrome')).filter(d => d.startsWith('linux-'));
+                if (chromeDirs.length > 0) {
+                    const chromePath = path.join(__dirname, '.chrome', 'chrome', chromeDirs[0], 'chrome-linux64', 'chrome');
+                    if (fs.existsSync(chromePath)) {
+                        console.log('🎯 Usando Chrome locale:', chromePath);
+                        return chromePath;
+                    }
+                }
+            } catch (e) {
+                // Ignora errore se directory non esiste
+            }
+            
+            // Prova Chrome di sistema
+            if (fs.existsSync(systemChrome)) {
+                console.log('🎯 Usando Chrome di sistema:', systemChrome);
+                return systemChrome;
+            }
+            
+            // Lascia decidere a Puppeteer (default)
+            console.log('🎯 Usando Chrome default di Puppeteer');
+            return undefined;
+        })(),
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -13,7 +75,12 @@ async function scrapeBrands() {
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--disable-gpu'
+            '--disable-gpu',
+            '--disable-extensions',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-features=TranslateUI',
+            '--disable-ipc-flooding-protection'
         ]
     });
     
