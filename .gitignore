@@ -10,8 +10,9 @@ pids
 # Coverage directory
 coverage/
 
-# IMPORTANTE: Commentato per includere Puppeteer pre-installato
+# IMPORTANTE: Commentato per includere node_modules e Chrome
 # node_modules/
+# .chrome/
 
 # Cache
 .npm
