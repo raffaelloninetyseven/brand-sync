@@ -1,0 +1,32 @@
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory
+coverage/
+
+# IMPORTANTE: Commentato per includere Puppeteer pre-installato
+# node_modules/
+
+# Cache
+.npm
+*.tgz
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug files
+debug-page.html
