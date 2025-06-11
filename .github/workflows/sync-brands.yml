@@ -2,7 +2,7 @@ name: Sync EssilorLuxottica Brands
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Ogni giorno alle 6:00 AM UTC
+    - cron: '0 6 * * *'  # Ogni giorno alle 6:00 AM UTC (erano 4 asterischi, ne servono 5!)
   workflow_dispatch:      # Permette esecuzione manuale
   push:
     branches: [ main ]    # Esegui anche quando pushes su main
