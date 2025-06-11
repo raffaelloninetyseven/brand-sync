@@ -7,7 +7,6 @@ async function ensureChrome() {
     console.log('🔍 Verificando installazione Chrome...');
     
     try {
-        // Prova a trovare Chrome nella directory del progetto
         const localChromePath = path.join(__dirname, '.chrome');
         
         if (fs.existsSync(localChromePath)) {
@@ -15,9 +14,8 @@ async function ensureChrome() {
             return;
         }
         
-        // Prova a scaricare Chrome localmente
         console.log('📥 Scaricando Chrome localmente...');
-        process.env.PUPPETEER_CACHE_DIR = path.join(__dirname, '.chrome');
+        process.env.PUPPETEER_CACHE_DIR = localChromePath;
         
         execSync('npx puppeteer browsers install chrome', { 
             stdio: 'inherit',
@@ -34,17 +32,11 @@ async function ensureChrome() {
 async function scrapeBrands() {
     console.log('🚀 Avvio copia esatta della tabella brand EssilorLuxottica...');
     
-    // Assicurati che Chrome sia disponibile
     await ensureChrome();
     
     const browser = await puppeteer.launch({
         headless: true,
-        // Prova Chrome locale, poi sistema, poi lascia decidere a Puppeteer
         executablePath: (() => {
-            const localChrome = path.join(__dirname, '.chrome', 'chrome', 'linux-*', 'chrome-linux64', 'chrome');
-            const systemChrome = '/usr/bin/google-chrome-stable';
-            
-            // Cerca Chrome locale con glob pattern
             try {
                 const chromeDirs = fs.readdirSync(path.join(__dirname, '.chrome', 'chrome')).filter(d => d.startsWith('linux-'));
                 if (chromeDirs.length > 0) {
@@ -55,16 +47,14 @@ async function scrapeBrands() {
                     }
                 }
             } catch (e) {
-                // Ignora errore se directory non esiste
+                // Fallback
             }
             
-            // Prova Chrome di sistema
-            if (fs.existsSync(systemChrome)) {
-                console.log('🎯 Usando Chrome di sistema:', systemChrome);
-                return systemChrome;
+            if (fs.existsSync('/usr/bin/google-chrome-stable')) {
+                console.log('🎯 Usando Chrome di sistema');
+                return '/usr/bin/google-chrome-stable';
             }
             
-            // Lascia decidere a Puppeteer (default)
             console.log('🎯 Usando Chrome default di Puppeteer');
             return undefined;
         })(),
@@ -76,11 +66,7 @@ async function scrapeBrands() {
             '--no-first-run',
             '--no-zygote',
             '--disable-gpu',
-            '--disable-extensions',
-            '--disable-background-timer-throttling',
-            '--disable-backgrounding-occluded-windows',
-            '--disable-features=TranslateUI',
-            '--disable-ipc-flooding-protection'
+            '--disable-extensions'
         ]
     });
     
@@ -103,7 +89,8 @@ async function scrapeBrands() {
         try {
             const viewButtonClicked = await page.evaluate(() => {
                 const buttons = document.querySelectorAll('button, a, div, span, [role="button"]');
-                for (let btn of buttons) {
+                for (let i = 0; i < buttons.length; i++) {
+                    const btn = buttons[i];
                     const text = btn.textContent.toLowerCase();
                     if (text.includes('view brands') || 
                         text.includes('show brands') ||
@@ -129,134 +116,168 @@ async function scrapeBrands() {
         
         // Estrai l'HTML completo della sezione brand
         const brandData = await page.evaluate(() => {
-            // Cerca il container principale dei brand
-            const possibleContainers = [
-                '[class*="brand"]',
-                '[class*="Brand"]',
-                '[class*="grid"]',
-                '[class*="Grid"]',
-                '[class*="container"]',
-                '.brands-section',
-                '.brand-grid',
-                '.logo-grid',
-                'main section',
-                '[data-component*="brand"]'
-            ];
-            
-            let brandContainer = null;
-            let brandHTML = '';
-            let brandCSS = '';
-            
-            // Trova il container che contiene più immagini di brand
-            for (const selector of possibleContainers) {
-                const containers = document.querySelectorAll(selector);
-                for (const container of containers) {
-                    const images = container.querySelectorAll('img');
-                    if (images.length >= 5) { // Container con almeno 5 immagini
-                        brandContainer = container;
-                        break;
+            // Funzione helper per trovare container
+            function findBrandContainer() {
+                const possibleContainers = [
+                    '[class*="brand"]',
+                    '[class*="Brand"]',
+                    '[class*="grid"]',
+                    '[class*="Grid"]',
+                    '[class*="container"]',
+                    '.brands-section',
+                    '.brand-grid',
+                    '.logo-grid',
+                    'main section',
+                    '[data-component*="brand"]'
+                ];
+                
+                // Trova il container che contiene più immagini di brand
+                for (let s = 0; s < possibleContainers.length; s++) {
+                    const selector = possibleContainers[s];
+                    const containers = document.querySelectorAll(selector);
+                    for (let c = 0; c < containers.length; c++) {
+                        const container = containers[c];
+                        const images = container.querySelectorAll('img');
+                        if (images.length >= 5) {
+                            return container;
+                        }
                     }
                 }
-                if (brandContainer) break;
-            }
-            
-            // Se non trova un container specifico, prendi tutto quello che contiene brand
-            if (!brandContainer) {
-                // Cerca tutti gli elementi che contengono immagini di brand
+                
+                // Fallback: trova il comune antenato delle immagini brand
                 const allImages = document.querySelectorAll('img');
-                const brandImages = Array.from(allImages).filter(img => 
-                    img.src.includes('brand') || 
-                    img.src.includes('logo') ||
-                    img.alt.toLowerCase().includes('brand') ||
-                    img.src.includes('essilorluxottica.com')
-                );
+                const brandImages = [];
+                for (let i = 0; i < allImages.length; i++) {
+                    const img = allImages[i];
+                    if (img.src.includes('brand') || 
+                        img.src.includes('logo') ||
+                        img.alt.toLowerCase().includes('brand') ||
+                        img.src.includes('essilorluxottica.com')) {
+                        brandImages.push(img);
+                    }
+                }
                 
                 if (brandImages.length > 0) {
-                    // Trova il comune antenato di tutte le immagini brand
                     let commonParent = brandImages[0].parentElement;
                     while (commonParent && commonParent !== document.body) {
-                        const containsAll = brandImages.every(img => commonParent.contains(img));
+                        let containsAll = true;
+                        for (let i = 0; i < brandImages.length; i++) {
+                            if (!commonParent.contains(brandImages[i])) {
+                                containsAll = false;
+                                break;
+                            }
+                        }
                         if (containsAll) {
-                            brandContainer = commonParent;
-                            break;
+                            return commonParent;
                         }
                         commonParent = commonParent.parentElement;
                     }
                 }
+                
+                return null;
             }
             
-            if (brandContainer) {
-                // Estrai HTML completo
-                brandHTML = brandContainer.outerHTML;
-                
-                // Estrai tutti gli stili CSS associati
-                const allStyleSheets = Array.from(document.styleSheets);
+            // Funzione per estrarre CSS
+            function extractCSS(container) {
                 let extractedCSS = '';
+                const usedClasses = [];
                 
-                // Ottieni tutte le classi usate nel container brand
-                const usedClasses = new Set();
-                const allElements = brandContainer.querySelectorAll('*');
-                allElements.forEach(function(el) {
+                // Raccogli tutte le classi usate
+                const allElements = container.querySelectorAll('*');
+                for (let i = 0; i < allElements.length; i++) {
+                    const el = allElements[i];
                     if (el.className && typeof el.className === 'string') {
-                        el.className.split(' ').forEach(function(cls) {
-                            if (cls.trim()) usedClasses.add(cls.trim());
-                        });
+                        const classes = el.className.split(' ');
+                        for (let j = 0; j < classes.length; j++) {
+                            const cls = classes[j].trim();
+                            if (cls && usedClasses.indexOf(cls) === -1) {
+                                usedClasses.push(cls);
+                            }
+                        }
                     }
-                });
+                }
                 
                 // Estrai CSS per le classi usate
-                allStyleSheets.forEach(function(sheet) {
+                const allStyleSheets = document.styleSheets;
+                for (let s = 0; s < allStyleSheets.length; s++) {
                     try {
+                        const sheet = allStyleSheets[s];
                         const rules = sheet.cssRules || sheet.rules;
                         if (rules) {
-                            for (let i = 0; i < rules.length; i++) {
-                                const rule = rules[i];
-                                if (rule.type === 1) { // CSSRule.STYLE_RULE
+                            for (let r = 0; r < rules.length; r++) {
+                                const rule = rules[r];
+                                if (rule.type === 1) { // STYLE_RULE
                                     const selector = rule.selectorText;
-                                    // Include la regola se contiene classi usate o selettori generici
-                                    if (selector && (
-                                        Array.from(usedClasses).some(function(cls) { return selector.includes('.' + cls); }) ||
-                                        selector.includes('img') ||
-                                        selector.includes('grid') ||
-                                        selector.includes('brand') ||
-                                        selector.includes('Brand')
-                                    )) {
-                                        extractedCSS += rule.cssText + '\n';
+                                    if (selector) {
+                                        let shouldInclude = false;
+                                        
+                                        // Controlla se contiene classi usate
+                                        for (let c = 0; c < usedClasses.length; c++) {
+                                            if (selector.includes('.' + usedClasses[c])) {
+                                                shouldInclude = true;
+                                                break;
+                                            }
+                                        }
+                                        
+                                        // O selettori generici
+                                        if (!shouldInclude && (
+                                            selector.includes('img') ||
+                                            selector.includes('grid') ||
+                                            selector.includes('brand') ||
+                                            selector.includes('Brand')
+                                        )) {
+                                            shouldInclude = true;
+                                        }
+                                        
+                                        if (shouldInclude) {
+                                            extractedCSS += rule.cssText + '\n';
+                                        }
                                     }
                                 }
                             }
                         }
                     } catch (e) {
-                        // Ignora errori CORS per fogli di stile esterni
+                        // Ignora errori CORS
                     }
-                });
+                }
                 
-                brandCSS = extractedCSS;
-                
-                console.log('✅ Container brand trovato e copiato');
-                console.log('📏 Dimensione HTML: ' + brandHTML.length + ' caratteri');
-                console.log('🎨 Dimensione CSS: ' + brandCSS.length + ' caratteri');
-                console.log('🏷️ Classi usate: ' + Array.from(usedClasses).join(', '));
-                
-                // Conta le immagini
-                const imageCount = brandContainer.querySelectorAll('img').length;
-                console.log('🖼️ Immagini trovate: ' + imageCount);
-                
-            } else {
-                console.log('❌ Nessun container brand trovato');
+                return {
+                    css: extractedCSS,
+                    usedClasses: usedClasses
+                };
             }
             
-            // Informazioni aggiuntive per debug
-            const pageTitle = document.title;
-            const pageURL = window.location.href;
+            // Esecuzione principale
+            const brandContainer = findBrandContainer();
+            
+            if (!brandContainer) {
+                return {
+                    html: '',
+                    css: '',
+                    usedClasses: [],
+                    imageCount: 0,
+                    pageTitle: document.title,
+                    pageURL: window.location.href,
+                    timestamp: new Date().toISOString()
+                };
+            }
+            
+            const brandHTML = brandContainer.outerHTML;
+            const cssData = extractCSS(brandContainer);
+            const imageCount = brandContainer.querySelectorAll('img').length;
+            
+            console.log('✅ Container brand trovato e copiato');
+            console.log('📏 Dimensione HTML: ' + brandHTML.length + ' caratteri');
+            console.log('🎨 Dimensione CSS: ' + cssData.css.length + ' caratteri');
+            console.log('🖼️ Immagini trovate: ' + imageCount);
             
             return {
                 html: brandHTML,
-                css: brandCSS,
-                usedClasses: usedClasses ? Array.from(usedClasses) : [],
-                imageCount: brandContainer ? brandContainer.querySelectorAll('img').length : 0,
-                pageTitle: pageTitle,
-                pageURL: pageURL,
+                css: cssData.css,
+                usedClasses: cssData.usedClasses,
+                imageCount: imageCount,
+                pageTitle: document.title,
+                pageURL: window.location.href,
                 timestamp: new Date().toISOString()
             };
         });
