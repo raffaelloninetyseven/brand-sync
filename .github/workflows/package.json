@@ -1,0 +1,16 @@
+{
+  "name": "brand-sync-essilorluxottica",
+  "version": "1.0.0",
+  "description": "Automatic brand synchronization from EssilorLuxottica",
+  "main": "scrape-brands.js",
+  "scripts": {
+    "start": "node scrape-brands.js",
+    "test": "node scrape-brands.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.6.0"
+  },
+  "keywords": ["scraping", "brands", "automation"],
+  "author": "Brand Sync Bot",
+  "license": "MIT"
+}
