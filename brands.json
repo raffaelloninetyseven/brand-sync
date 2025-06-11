@@ -1,0 +1,243 @@
+{
+  "last_updated": "2025-06-11T08:50:43.635Z",
+  "source_url": "https://www.essilorluxottica.com/en/brands/eyewear/",
+  "total_brands": 47,
+  "status": "success",
+  "brands": [
+    {
+      "name": "Eyecare s",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/177418/data/7b9acf6a948fa04511c586934262e943/cropdesktopXL/1920/d-eyecare.png",
+      "scraped_at": "2025-06-11T08:50:43.633Z"
+    },
+    {
+      "name": "184a2d28553c2b50231eb421f7213e45",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105400/data/picture/184a2d28553c2b50231eb421f7213e45.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "A430f9e1fecbe419bf26d3d5ab83664c",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/104904/data/picture/a430f9e1fecbe419bf26d3d5ab83664c.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Bd96463ebd9344c16e97e38ffc5c809a",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/104900/data/picture/bd96463ebd9344c16e97e38ffc5c809a.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "0739bc198727ccdaa4d67f3a9804b994",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/172158/data/picture/0739bc198727ccdaa4d67f3a9804b994.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "0313db8d4b5a7e74c62f5296860f0960",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105096/data/picture/0313db8d4b5a7e74c62f5296860f0960.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "3496e0bc713159e26ff546d1e3cf1fcf",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105444/data/picture/3496e0bc713159e26ff546d1e3cf1fcf.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "23d64653bd950dc6dfe0163a3af47ced",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/104996/data/picture/23d64653bd950dc6dfe0163a3af47ced.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "385a4ed3d373b3b190a1914d120c0ff2",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105004/data/picture/385a4ed3d373b3b190a1914d120c0ff2.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "54bb8edb32fac8ff6d9a4be510dc2b29",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105008/data/picture/54bb8edb32fac8ff6d9a4be510dc2b29.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "2739eddf39a5c605c95e43a5a926e24b",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/104920/data/picture/2739eddf39a5c605c95e43a5a926e24b.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "468dda0e88295faf336d20648aade1c2",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105290/data/picture/468dda0e88295faf336d20648aade1c2.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Dca6f94c0ea028936a376c5efdc303ee",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/250558/data/picture/dca6f94c0ea028936a376c5efdc303ee.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "4ad723a7958bf1829940cdaf74eeda72",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105012/data/picture/4ad723a7958bf1829940cdaf74eeda72.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "1f27d097ebb95d16095b8b3e2b5871a7",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105016/data/picture/1f27d097ebb95d16095b8b3e2b5871a7.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "F85b2355911eddb9f3da0bd6fc7a562a",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105392/data/picture/f85b2355911eddb9f3da0bd6fc7a562a.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Eddf1fb9e920368b5297d95315dbb74e",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105134/data/picture/eddf1fb9e920368b5297d95315dbb74e.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "E982d880e480f8fe8377760942371974",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105138/data/picture/e982d880e480f8fe8377760942371974.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "A2166789f6e0a013c224e8b4306fac16",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105020/data/picture/a2166789f6e0a013c224e8b4306fac16.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "165b6e62782830d8a2c720b7a694d6ec",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/172190/data/picture/165b6e62782830d8a2c720b7a694d6ec.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "28d0f5409f1944b728dc9ffd0e29cac0",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105298/data/picture/28d0f5409f1944b728dc9ffd0e29cac0.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "21c0083b0b1cc23b878c1b10e5e8b2da",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105192/data/picture/21c0083b0b1cc23b878c1b10e5e8b2da.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Daa8e568c705713819144da3b2c9419d",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105024/data/picture/daa8e568c705713819144da3b2c9419d.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Df3f86abf6eee1ecb897ac43af28565c",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105200/data/picture/df3f86abf6eee1ecb897ac43af28565c.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "3f9b06bf0af5fae22e7d0f56f8024451",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/172218/data/picture/3f9b06bf0af5fae22e7d0f56f8024451.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "F4feb482be1c3d22625a1efca719b8ea",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105300/data/picture/f4feb482be1c3d22625a1efca719b8ea.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "C2514dc83f689ce8da4bb251b0f194ea",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105214/data/picture/c2514dc83f689ce8da4bb251b0f194ea.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "13be46ec96ed017b3e1d9b749d9c6270",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105030/data/picture/13be46ec96ed017b3e1d9b749d9c6270.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Bb56609e866edc3c7dec8473b9fbbfe4",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105464/data/picture/bb56609e866edc3c7dec8473b9fbbfe4.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "837c801a975d81a165e29edd75170bfb",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105040/data/picture/837c801a975d81a165e29edd75170bfb.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "90a5e9954b4bc72751f243c17d970aec",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105048/data/picture/90a5e9954b4bc72751f243c17d970aec.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "32aff8b481d92fdcfb886cbcc2d832bf",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105442/data/picture/32aff8b481d92fdcfb886cbcc2d832bf.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "4a37b5b16ded7ee005f243ad2e71192e",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105056/data/picture/4a37b5b16ded7ee005f243ad2e71192e.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "99cd863724d662eb9013351b1dcd2de4",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105052/data/picture/99cd863724d662eb9013351b1dcd2de4.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "14e06b3d55ce4ec43ab186c6e576b929",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105462/data/picture/14e06b3d55ce4ec43ab186c6e576b929.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "2e8d0545cce8a6b4ffa072c0d40da932",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/172250/data/picture/2e8d0545cce8a6b4ffa072c0d40da932.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "25c671f179b043aa556d5965fd1e783c",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105458/data/picture/25c671f179b043aa556d5965fd1e783c.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "39e65e6ad54b6d49496ea6d882f08b46",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105304/data/picture/39e65e6ad54b6d49496ea6d882f08b46.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "1f238006917b00d64a32c648f1f2cc24",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105398/data/picture/1f238006917b00d64a32c648f1f2cc24.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "C44f75fb327dec47b4c13cfc388b88e2",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105066/data/picture/c44f75fb327dec47b4c13cfc388b88e2.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "06d8262d6a96320cfc454621205e8e6e",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105070/data/picture/06d8262d6a96320cfc454621205e8e6e.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "4eeb03c6ce51351a569f8858640431cf",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105272/data/picture/4eeb03c6ce51351a569f8858640431cf.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "1eab2e989b702e3e126107290ca8867f",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/105074/data/picture/1eab2e989b702e3e126107290ca8867f.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "07843770ad79f0ac6e642b2abb548cd4",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/104988/data/picture/07843770ad79f0ac6e642b2abb548cd4.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "EssilorLuxottica",
+      "logo": "https://www.essilorluxottica.com/Images/EssilorLuxottica.svg",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Eyewear",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/98734/data/picture/e635ade57215384a0224c6d6633c2304.jpg",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    },
+    {
+      "name": "Direct to consumer",
+      "logo": "https://media.essilorluxottica.com/cms/caas/v1/media/176216/data/0c081455537fb783392a3da8a2b1da86/cropdesktopXL/1920/d-d2c-new.png",
+      "scraped_at": "2025-06-11T08:50:43.634Z"
+    }
+  ]
+}
