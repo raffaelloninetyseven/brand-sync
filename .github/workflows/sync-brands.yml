@@ -1,0 +1,39 @@
+name: Sync EssilorLuxottica Brands
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Ogni giorno alle 6:00 AM UTC
+  workflow_dispatch:      # Permette esecuzione manuale
+  push:
+    branches: [ main ]    # Esegui anche quando pushes su main
+
+jobs:
+  sync-brands:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install puppeteer
+      
+    - name: Run brand scraping
+      run: node scrape-brands.js
+      
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action Bot"
+        git add brands.json
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "🔄 Update brands data $(date '+%Y-%m-%d %H:%M')"
+          git push
+        fi
