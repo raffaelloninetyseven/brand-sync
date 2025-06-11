@@ -1,0 +1,9 @@
+{
+  "name": "brand-sync-essilorluxottica",
+  "version": "1.0.0",
+  "description": "Automatic brand synchronization from EssilorLuxottica",
+  "main": "scrape-brands.js",
+  "dependencies": {
+    "puppeteer": "^21.6.0"
+  }
+}
