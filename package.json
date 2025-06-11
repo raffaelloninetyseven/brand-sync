@@ -8,5 +8,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "npx puppeteer browsers install chrome"
   }
 }
