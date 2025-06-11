@@ -5,5 +5,8 @@
   "main": "scrape-brands.js",
   "dependencies": {
     "puppeteer": "^21.6.0"
+  },
+  "scripts": {
+    "postinstall": "npm list puppeteer || npm install puppeteer"
   }
 }
