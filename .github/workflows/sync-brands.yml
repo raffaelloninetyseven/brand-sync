@@ -2,7 +2,7 @@ name: Sync EssilorLuxottica Brands
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Ogni giorno alle 6:00 AM UTC (erano 4 asterischi, ne servono 5!)
+    - cron: '0 6 * * *'  # Ogni giorno alle 6:00 AM UTC
   workflow_dispatch:      # Permette esecuzione manuale
   push:
     branches: [ main ]    # Esegui anche quando pushes su main
@@ -21,7 +21,7 @@ jobs:
         node-version: '18'
         
     - name: Install dependencies
-      run: npm ci --production
+      run: npm install --production
       
     - name: Run brand scraping
       run: node scrape-brands.js
@@ -30,7 +30,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action Bot"
-        git add brands.json
+        git add brands.json brands.html
         if git diff --staged --quiet; then
           echo "No changes to commit"
         else
