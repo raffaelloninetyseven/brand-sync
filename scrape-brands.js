@@ -196,25 +196,26 @@ async function scrapeBrands() {
                 // Ottieni tutte le classi usate nel container brand
                 const usedClasses = new Set();
                 const allElements = brandContainer.querySelectorAll('*');
-                allElements.forEach(el => {
+                allElements.forEach(function(el) {
                     if (el.className && typeof el.className === 'string') {
-                        el.className.split(' ').forEach(cls => {
+                        el.className.split(' ').forEach(function(cls) {
                             if (cls.trim()) usedClasses.add(cls.trim());
                         });
                     }
                 });
                 
                 // Estrai CSS per le classi usate
-                allStyleSheets.forEach(sheet => {
+                allStyleSheets.forEach(function(sheet) {
                     try {
                         const rules = sheet.cssRules || sheet.rules;
                         if (rules) {
-                            for (let rule of rules) {
-                                if (rule.type === CSSRule.STYLE_RULE) {
+                            for (let i = 0; i < rules.length; i++) {
+                                const rule = rules[i];
+                                if (rule.type === 1) { // CSSRule.STYLE_RULE
                                     const selector = rule.selectorText;
                                     // Include la regola se contiene classi usate o selettori generici
                                     if (selector && (
-                                        Array.from(usedClasses).some(cls => selector.includes('.' + cls)) ||
+                                        Array.from(usedClasses).some(function(cls) { return selector.includes('.' + cls); }) ||
                                         selector.includes('img') ||
                                         selector.includes('grid') ||
                                         selector.includes('brand') ||
@@ -252,7 +253,7 @@ async function scrapeBrands() {
             return {
                 html: brandHTML,
                 css: brandCSS,
-                usedClasses: Array.from(usedClasses),
+                usedClasses: usedClasses ? Array.from(usedClasses) : [],
                 imageCount: brandContainer ? brandContainer.querySelectorAll('img').length : 0,
                 pageTitle: pageTitle,
                 pageURL: pageURL,
