@@ -1,0 +1,64 @@
+name: Setup Puppeteer + Chrome (Run Once)
+
+on:
+  workflow_dispatch:  # Solo esecuzione manuale
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install Puppeteer + Download Chrome
+      run: |
+        echo "📦 Installando Puppeteer con Chrome..."
+        npm install puppeteer@22.15.0 --save
+        echo "🌐 Scaricando Chrome browser..."
+        npx puppeteer browsers install chrome
+        echo "✅ Setup completato"
+        
+    - name: Verify Chrome installation
+      run: |
+        echo "🔍 Verificando installazione Chrome..."
+        ls -la ~/.cache/puppeteer/
+        node -e "
+        const puppeteer = require('puppeteer');
+        console.log('✅ Puppeteer version:', require('./node_modules/puppeteer/package.json').version);
+        console.log('✅ Chrome installato correttamente');
+        "
+        
+    - name: Create optimized package.json
+      run: |
+        cat > package.json << 'EOF'
+        {
+          "name": "brand-sync-essilorluxottica",
+          "version": "1.0.0", 
+          "description": "Automatic brand synchronization from EssilorLuxottica",
+          "main": "scrape-brands.js",
+          "dependencies": {
+            "puppeteer": "22.15.0"
+          },
+          "engines": {
+            "node": ">=18"
+          },
+          "scripts": {
+            "postinstall": "npx puppeteer browsers install chrome"
+          }
+        }
+        EOF
+        echo "✅ package.json con postinstall Chrome creato"
+        
+    - name: Commit everything
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Setup Bot"
+        git add .
+        git commit -m "🚀 Pre-install Puppeteer + Chrome for ultra-fast execution"
+        git push
