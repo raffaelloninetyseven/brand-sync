@@ -51,7 +51,7 @@ async function scrapeBrands() {
             });
             
             if (viewButtonClicked) {
-                console.log(`🔍 Cliccato "${viewButtonClicked}", aspetto caricamento...`);
+                console.log('🔍 Cliccato "' + viewButtonClicked + '", aspetto caricamento...');
                 await page.waitForTimeout(5000);
             }
         } catch (e) {
@@ -133,8 +133,8 @@ async function scrapeBrands() {
                     if (el.className && typeof el.className === 'string') {
                         el.className.split(' ').forEach(cls => {
                             if (cls.trim()) usedClasses.add(cls.trim());
-                        }
-                    });
+                        });
+                    }
                 });
                 
                 // Estrai CSS per le classi usate
@@ -147,7 +147,7 @@ async function scrapeBrands() {
                                     const selector = rule.selectorText;
                                     // Include la regola se contiene classi usate o selettori generici
                                     if (selector && (
-                                        Array.from(usedClasses).some(cls => selector.includes(`.${cls}`)) ||
+                                        Array.from(usedClasses).some(cls => selector.includes('.' + cls)) ||
                                         selector.includes('img') ||
                                         selector.includes('grid') ||
                                         selector.includes('brand') ||
@@ -166,13 +166,13 @@ async function scrapeBrands() {
                 brandCSS = extractedCSS;
                 
                 console.log('✅ Container brand trovato e copiato');
-                console.log(`📏 Dimensione HTML: ${brandHTML.length} caratteri`);
-                console.log(`🎨 Dimensione CSS: ${brandCSS.length} caratteri`);
-                console.log(`🏷️ Classi usate: ${Array.from(usedClasses).join(', ')}`);
+                console.log('📏 Dimensione HTML: ' + brandHTML.length + ' caratteri');
+                console.log('🎨 Dimensione CSS: ' + brandCSS.length + ' caratteri');
+                console.log('🏷️ Classi usate: ' + Array.from(usedClasses).join(', '));
                 
                 // Conta le immagini
                 const imageCount = brandContainer.querySelectorAll('img').length;
-                console.log(`🖼️ Immagini trovate: ${imageCount}`);
+                console.log('🖼️ Immagini trovate: ' + imageCount);
                 
             } else {
                 console.log('❌ Nessun container brand trovato');
@@ -198,69 +198,7 @@ async function scrapeBrands() {
         }
         
         // Crea HTML completo stand-alone
-        const completeHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EssilorLuxottica Brands - Auto Sync</title>
-    <style>
-        /* Reset CSS base */
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #ffffff;
-        }
-        
-        /* CSS estratto dalla pagina originale */
-        ${brandData.css}
-        
-        /* CSS aggiuntivo per assicurare buona visualizzazione */
-        .brand-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* Stili di fallback per griglia */
-        [class*="grid"], [class*="Grid"] {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        [class*="brand"], [class*="Brand"] {
-            text-align: center;
-            padding: 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="brand-container">
-        <!-- HTML copiato esattamente dalla pagina EssilorLuxottica -->
-        ${brandData.html}
-    </div>
-    
-    <!-- Metadati per debug -->
-    <div style="margin-top: 50px; padding: 20px; background: #f5f5f5; border-radius: 8px; font-size: 12px; color: #666;">
-        <strong>📊 Informazioni Sync:</strong><br>
-        <strong>Ultimo aggiornamento:</strong> ${brandData.timestamp}<br>
-        <strong>Fonte:</strong> ${brandData.pageURL}<br>
-        <strong>Immagini trovate:</strong> ${brandData.imageCount}<br>
-        <strong>Classi CSS usate:</strong> ${brandData.usedClasses.join(', ')}<br>
-        <strong>Sync automatico:</strong> Ogni giorno alle 6:00 AM UTC via GitHub Actions
-    </div>
-</body>
-</html>`;
+        const completeHTML = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>EssilorLuxottica Brands - Auto Sync</title>\n    <style>\n        /* Reset CSS base */\n        * {\n            box-sizing: border-box;\n        }\n        \n        body {\n            margin: 0;\n            padding: 20px;\n            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;\n            background-color: #ffffff;\n        }\n        \n        /* CSS estratto dalla pagina originale */\n        ' + brandData.css + '\n        \n        /* CSS aggiuntivo per assicurare buona visualizzazione */\n        .brand-container {\n            max-width: 1200px;\n            margin: 0 auto;\n        }\n        \n        img {\n            max-width: 100%;\n            height: auto;\n        }\n        \n        /* Stili di fallback per griglia */\n        [class*="grid"], [class*="Grid"] {\n            display: grid;\n            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n            gap: 20px;\n        }\n        \n        [class*="brand"], [class*="Brand"] {\n            text-align: center;\n            padding: 15px;\n        }\n    </style>\n</head>\n<body>\n    <div class="brand-container">\n        <!-- HTML copiato esattamente dalla pagina EssilorLuxottica -->\n        ' + brandData.html + '\n    </div>\n    \n    <!-- Metadati per debug -->\n    <div style="margin-top: 50px; padding: 20px; background: #f5f5f5; border-radius: 8px; font-size: 12px; color: #666;">\n        <strong>📊 Informazioni Sync:</strong><br>\n        <strong>Ultimo aggiornamento:</strong> ' + brandData.timestamp + '<br>\n        <strong>Fonte:</strong> ' + brandData.pageURL + '<br>\n        <strong>Immagini trovate:</strong> ' + brandData.imageCount + '<br>\n        <strong>Classi CSS usate:</strong> ' + brandData.usedClasses.join(', ') + '<br>\n        <strong>Sync automatico:</strong> Ogni giorno alle 6:00 AM UTC via GitHub Actions\n    </div>\n</body>\n</html>';
         
         // Salva i file
         const outputData = {
@@ -286,26 +224,24 @@ async function scrapeBrands() {
         console.log('💾 File salvati:');
         console.log('  - brands.json (dati completi)');
         console.log('  - brands.html (pagina stand-alone)');
-        console.log(`✅ Copiata esattamente la sezione brand con ${brandData.imageCount} immagini`);
+        console.log('✅ Copiata esattamente la sezione brand con ' + brandData.imageCount + ' immagini');
         
     } catch (error) {
         console.error('❌ Errore durante la copia:', error.message);
+        
+        const errorHTML = '<!DOCTYPE html>\n<html><head><title>Errore Sync</title></head>\n<body><h1>Errore nel sync automatico</h1>\n<p>Errore: ' + error.message + '</p>\n<p>Ultimo tentativo: ' + new Date().toLocaleString() + '</p></body></html>';
         
         const errorData = {
             last_updated: new Date().toISOString(),
             status: 'error',
             error: error.message,
-            complete_html: `<!DOCTYPE html>
-<html><head><title>Errore Sync</title></head>
-<body><h1>Errore nel sync automatico</h1>
-<p>Errore: ${error.message}</p>
-<p>Ultimo tentativo: ${new Date().toLocaleString()}</p></body></html>`,
+            complete_html: errorHTML,
             raw_html: '',
             raw_css: ''
         };
         
         fs.writeFileSync('brands.json', JSON.stringify(errorData, null, 2));
-        fs.writeFileSync('brands.html', errorData.complete_html);
+        fs.writeFileSync('brands.html', errorHTML);
         process.exit(1);
     } finally {
         await browser.close();
